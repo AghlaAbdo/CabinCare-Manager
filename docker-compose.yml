@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+
+  api:
+    build:
+      context: ./backend
+    container_name: cabincare_api
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+    networks:
+      - cabincare_network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: cabincare_frontend
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - api
+    volumes:
+      - ./frontend:/app
+    networks:
+      - cabincare_network
+
+networks:
+  cabincare_network:
+    name: cabincare_network
