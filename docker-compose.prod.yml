@@ -1,0 +1,9 @@
+services:
+
+  api:
+    build:
+      target: production
+
+  frontend:
+    build:
+      target: production
