@@ -151,7 +151,9 @@ export default function CabinDetailsModal({
                     </p>
                   ) : (
                     <div className="max-h-[300px] overflow-y-auto space-y-3 pr-2">
-                      {cabinDetails.maintenanceTasks?.map((task) => (
+                      {[...cabinDetails.maintenanceTasks]
+                        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                        .map((task) => (
                         <div
                           key={task.id}
                           className="bg-slate-50 p-4 rounded-lg border border-slate-200"
