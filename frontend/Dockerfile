@@ -9,7 +9,7 @@ CMD ["npm", "run", "dev"]
 
 FROM base AS production
 COPY . .
-RUN npm install 
+RUN npm install --only=production
 RUN npm run build
 EXPOSE 3000
 CMD ["npm", "run", "start"]
