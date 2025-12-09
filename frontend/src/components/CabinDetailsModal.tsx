@@ -17,6 +17,7 @@ interface CabinDetails {
   name: string;
   location: string;
   description?: string;
+  createdAt: string;
   maintenanceTasks: MaintenanceTask[];
 }
 
@@ -107,6 +108,14 @@ export default function CabinDetailsModal({
     }
   };
 
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
   return (
     <>
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -130,10 +139,13 @@ export default function CabinDetailsModal({
                   <h3 className="text-xl font-black text-slate-900 mb-2">
                     {cabinDetails.name}
                   </h3>
-                  <div className="flex items-center gap-2 text-slate-500 mb-4">
+                  <div className="flex items-center gap-2 text-slate-500 mb-2">
                     <MapPinIcon className="w-4 h-4" />
                     <span>{cabinDetails.location}</span>
                   </div>
+                  <p className="text-sm text-slate-400 mb-4">
+                    Created on {formatDate(cabinDetails.createdAt)}
+                  </p>
                   {cabinDetails.description && (
                     <p className="text-slate-600 bg-slate-50 p-4 rounded-lg">
                       {cabinDetails.description}
@@ -163,7 +175,7 @@ export default function CabinDetailsModal({
                               <p className="text-slate-900 font-medium mb-2">
                                 {task.description}
                               </p>
-                              <div className="flex items-center gap-3">
+                              <div className="flex items-center gap-3 flex-wrap">
                                 <div className="flex items-center gap-2">
                                   <div
                                     className={`w-2.5 h-2.5 rounded-full ${getPriorityColor(task.priority)}`}
@@ -176,6 +188,9 @@ export default function CabinDetailsModal({
                                   className={`text-xs px-2 py-1 rounded-full font-medium ${getStatusBadge(task.status)}`}
                                 >
                                   {task.status}
+                                </span>
+                                <span className="text-xs text-slate-400">
+                                  {formatDate(task.createdAt)}
                                 </span>
                               </div>
                             </div>

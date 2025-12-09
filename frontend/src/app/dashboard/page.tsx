@@ -30,6 +30,7 @@ interface CabinDetails {
   name: string;
   location: string;
   description?: string;
+  createdAt: string;
   maintenanceTasks: MaintenanceTask[];
 }
 
