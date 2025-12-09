@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-// import { MaintenanceTask } from '../maintenance-tasks/maintenance-task.entity';
+import { MaintenanceTask } from '../maintenance-tasks/maintenance-task.entity';
 
 @Entity('cabins')
 export class Cabin {
@@ -17,7 +17,7 @@ export class Cabin {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
-//   Todo
-//   @OneToMany(() => MaintenanceTask, (task) => task.cabin, { cascade: true })
-//   maintenanceTasks: MaintenanceTask[];
+  
+  @OneToMany(() => MaintenanceTask, (task) => task.cabin, { cascade: true })
+  maintenanceTasks: MaintenanceTask[];
 }

@@ -19,7 +19,7 @@ export class CabinsService {
 
   async findAll(): Promise<Cabin[]> {
     return this.cabinsRepository.find({
-    //   relations: ['maintenanceTasks'],
+      relations: ['maintenanceTasks'],
       order: { createdAt: 'DESC' },
     });
   }
@@ -34,11 +34,11 @@ export class CabinsService {
   async getCabinsSummary(): Promise<CabinSummaryDto[]> {
     const cabins = await this.cabinsRepository
       .createQueryBuilder('cabin')
-    //   .leftJoinAndSelect(
-    //     'cabin.maintenanceTasks',
-    //     'task',
-    //     "task.status = 'Pending'",
-    //   )
+      .leftJoinAndSelect(
+        'cabin.maintenanceTasks',
+        'task',
+        "task.status = 'Pending'",
+      )
       .orderBy('cabin.createdAt', 'DESC')
       .getMany();
 
@@ -47,20 +47,16 @@ export class CabinsService {
       name: cabin.name,
       location: cabin.location,
       description: cabin.description,
-      pendingHighPriority: 0,
-      pendingMediumPriority: 0,
-      pendingLowPriority: 0,
-      totalPendingTasks: 0,
-    //   pendingHighPriority: cabin.maintenanceTasks.filter(
-    //     (t) => t.priority === 'High',
-    //   ).length,
-    //   pendingMediumPriority: cabin.maintenanceTasks.filter(
-    //     (t) => t.priority === 'Medium',
-    //   ).length,
-    //   pendingLowPriority: cabin.maintenanceTasks.filter(
-    //     (t) => t.priority === 'Low',
-    //   ).length,
-    //   totalPendingTasks: cabin.maintenanceTasks.length,
+      pendingHighPriority: cabin.maintenanceTasks.filter(
+        (t) => t.priority === 'High',
+      ).length,
+      pendingMediumPriority: cabin.maintenanceTasks.filter(
+        (t) => t.priority === 'Medium',
+      ).length,
+      pendingLowPriority: cabin.maintenanceTasks.filter(
+        (t) => t.priority === 'Low',
+      ).length,
+      totalPendingTasks: cabin.maintenanceTasks.length,
     }));
   }
 }

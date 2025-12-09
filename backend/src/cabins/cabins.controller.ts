@@ -3,6 +3,7 @@ import { CabinsService } from './cabins.service';
 import { CreateCabinDto } from './dto/create-cabin.dto';
 import { Cabin } from './cabin.entity';
 import { CabinSummaryDto } from './dto/cabin-summary.dto';
+import { ValidateUUIDPipe } from '../common/pipes/validate-uuid.pipe';
 
 @Controller('cabins')
 export class CabinsController {
@@ -30,7 +31,7 @@ export class CabinsController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Cabin> {
+  async findOne(@Param('id', ValidateUUIDPipe) id: string): Promise<Cabin> {
     const cabin = await this.cabinsService.findOne(id);
     if (!cabin) {
       throw new NotFoundException(`Cabin with ID ${id} not found`);
