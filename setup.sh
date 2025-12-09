@@ -15,6 +15,8 @@ echo "Starting CabinCare Manager setup in $MODE mode..."
 echo "Stopping existing containers..."
 docker compose down || true
 
+mkdir -p data
+
 if [[ "$MODE" == "dev" ]]; then
   docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build -d
 else
