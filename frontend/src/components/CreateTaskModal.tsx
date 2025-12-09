@@ -33,7 +33,7 @@ export default function CreateTaskModal({
           <h2 className="text-2xl font-black text-slate-900 tracking-tight">Add New Task</h2>
           <button
             onClick={onClose}
-            className="text-slate-500 hover:text-slate-700"
+            className="text-slate-500 hover:text-slate-700 cursor-pointer"
           >
             <XMarkIcon className="w-6 h-6" />
           </button>
@@ -49,7 +49,7 @@ export default function CreateTaskModal({
               onChange={(e) =>
                 setTaskForm({ ...taskForm, description: e.target.value })
               }
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#137fec] focus:border-transparent outline-none resize-none"
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#137fec] focus:border-transparent outline-none resize-none text-slate-500"
               rows={3}
               placeholder="e.g., Fix leaky faucet in bathroom"
             />
@@ -66,7 +66,7 @@ export default function CreateTaskModal({
                   priority: e.target.value as 'High' | 'Medium' | 'Low',
                 })
               }
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#137fec] focus:border-transparent outline-none"
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#137fec] focus:border-transparent outline-none text-slate-500"
             >
               <option value="High">High</option>
               <option value="Medium">Medium</option>
@@ -85,7 +85,7 @@ export default function CreateTaskModal({
                   status: e.target.value as 'Pending' | 'In Progress' | 'Complete',
                 })
               }
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#137fec] focus:border-transparent outline-none"
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-[#137fec] focus:border-transparent outline-none text-slate-500"
             >
               <option value="Pending">Pending</option>
               <option value="In Progress">In Progress</option>
@@ -96,13 +96,13 @@ export default function CreateTaskModal({
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors font-bold"
+              className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg bg-slate-200 hover:bg-slate-300 transition-colors font-bold cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-[#137fec] text-white rounded-lg hover:bg-[#137fec]/90 transition-colors font-bold"
+              className="flex-1 px-4 py-2 bg-sky-blue text-white rounded-lg hover:bg-sky-blue/90 transition-colors font-bold cursor-pointer"
             >
               Add Task
             </button>

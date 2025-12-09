@@ -177,6 +177,13 @@ export default function Dashboard() {
     setCabinDetails(null);
   };
 
+  const handleTaskUpdate = async () => {
+    if (selectedCabinId) {
+      await fetchCabinDetails(selectedCabinId);
+    }
+    await fetchCabins();
+  };
+
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case 'High':
@@ -217,28 +224,25 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen bg-[#f6f7f8] p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-black text-slate-900 tracking-tight">Dashboard</h1>
           </div>
           <button
             onClick={() => setShowCabinModal(true)}
-            className="flex items-center gap-2 bg-[#137fec] text-white px-6 py-2.5 rounded-lg hover:bg-[#137fec]/90 transition-colors font-bold"
+            className="flex items-center gap-2 bg-sky-blue text-white px-6 py-2.5 rounded-lg hover:bg-sky-blue/90 transition-colors font-bold cursor-pointer"
           >
             <PlusIcon className="w-5 h-5" />
             New Cabin
           </button>
         </div>
 
-        {/* Error Message */}
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
             {error}
           </div>
         )}
 
-        {/* Empty State */}
         {cabins.length === 0 ? (
           <div className="bg-white rounded-xl shadow-lg p-12 text-center">
             <p className="text-slate-500 mb-6 text-lg">No cabins registered yet.</p>
@@ -257,33 +261,29 @@ export default function Dashboard() {
                 key={cabin.id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col"
               >
-                {/* Header Section */}
                 <div className="flex flex-col gap-3 p-6">
                   <p className="text-slate-900 text-xl font-black leading-tight tracking-tight">
                     {cabin.name}
                   </p>
                   <div className="flex items-center gap-2">
-                    <MapPinIcon className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                    <MapPinIcon className="w-4 h-4 text-slate-500 shrink-0" />
                     <p className="text-slate-500 text-sm font-normal leading-normal">
                       {cabin.location}
                     </p>
                   </div>
                 </div>
 
-                {/* Divider */}
                 <div className="px-6">
                   <hr className="border-slate-200" />
                 </div>
 
-                {/* Task Summary Section */}
-                <div className="flex-grow">
+                <div className="grow">
                   <h3 className="text-slate-900 text-base font-bold leading-tight tracking-tight px-6 pb-2 pt-4">
                     Pending tasks
                   </h3>
                   <div className="p-6 pt-2 grid grid-cols-1 gap-3">
-                    {/* High Priority */}
                     <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-red-500 flex-shrink-0"></div>
+                      <div className="w-3 h-3 rounded-full bg-red-500 shrink-0"></div>
                       <div className="flex flex-col">
                         <p className="text-slate-500 text-sm font-normal leading-normal">
                           High priority
@@ -294,9 +294,8 @@ export default function Dashboard() {
                       </div>
                     </div>
 
-                    {/* Medium Priority */}
                     <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0"></div>
+                      <div className="w-3 h-3 rounded-full bg-orange-500 shrink-0"></div>
                       <div className="flex flex-col">
                         <p className="text-slate-500 text-sm font-normal leading-normal">
                           Medium priority
@@ -307,9 +306,8 @@ export default function Dashboard() {
                       </div>
                     </div>
 
-                    {/* Low Priority */}
                     <div className="flex items-center gap-3">
-                      <div className="w-3 h-3 rounded-full bg-blue-500 flex-shrink-0"></div>
+                      <div className="w-3 h-3 rounded-full bg-blue-500 shrink-0"></div>
                       <div className="flex flex-col">
                         <p className="text-slate-500 text-sm font-normal leading-normal">
                           Low priority
@@ -322,21 +320,20 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                {/* Footer Buttons */}
-                <div className="flex gap-3 px-6 py-4 bg-slate-50 mt-auto">
+                <div className="flex justify-between px-6 py-4 bg-slate-50 mt-auto">
                   <button
                     onClick={() => openDetailsModal(cabin.id)}
-                    className="flex items-center justify-center rounded-lg h-12 px-4 bg-slate-200 text-slate-700 gap-2 text-base font-bold leading-normal hover:bg-slate-300 transition-colors"
+                    className="flex items-center justify-center rounded-lg py-3 px-3 bg-slate-200 text-slate-700 gap-2 text-base font-bold leading-normal hover:bg-slate-300 transition-colors cursor-pointer"
                   >
                     <EyeIcon className="w-5 h-5" />
                     Details
                   </button>
                   <button
                     onClick={() => openTaskModal(cabin.id)}
-                    className="flex flex-1 cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-5 bg-[#137fec] text-white gap-2 text-base font-bold leading-normal tracking-wide hover:bg-[#137fec]/90 transition-colors"
+                    className="flex  cursor-pointer items-center justify-center overflow-hidden rounded-lg py-3 px-3 bg-sky-blue text-white gap-2 text-base font-bold leading-normal tracking-wide hover:bg-sky-blue/90 transition-colors"
                   >
                     <PlusIcon className="w-5 h-5" />
-                    <span className="truncate">Add task</span>
+                    <span className="truncate">New task</span>
                   </button>
                 </div>
               </div>
@@ -345,7 +342,6 @@ export default function Dashboard() {
         )}
       </div>
 
-      {/* Modals */}
       <CreateCabinModal
         isOpen={showCabinModal}
         onClose={() => setShowCabinModal(false)}
@@ -367,6 +363,7 @@ export default function Dashboard() {
         onClose={closeDetailsModal}
         cabinDetails={cabinDetails}
         isLoading={detailsLoading}
+        onTaskUpdate={handleTaskUpdate}
       />
     </main>
   );
